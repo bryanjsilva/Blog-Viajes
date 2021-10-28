@@ -10,7 +10,47 @@
     </head>
     <body>
         <%- include ('./partials/header') %>
-        <h1>Bem-vindo</h1>
+        
+        <main class="m-auto bg-dark text-light p-md-5">
+            <div class="container-fluid">
+                <img src="images/fondo.jpg" class="w-100" alt="foto de paisaje">
+                <h1 class="m-2">Inicio</h1>
+                <p class="m-2">Aquí nuestras últimas publicaciones:</p>
+
+                <div class="row d-flex justify-content-center">
+                    <% publicaciones.forEach(function(publicacion) { %>
+                        <div class="col-lg-3 py-3">
+                            <div class="card text-dark m-auto" style="width: 18rem;">
+                                <img src="images/logo.png" class="card-img-top bg-dark" alt="...">
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                      <a href="#" class="navbar-brand text-warning">
+                                          <%= publicacion.titulo %>
+                                      </a>
+                                    </h4>
+                                    <h6>
+                                      <span class="fa fa-user fa-fw"></span>
+                                      <%= publicacion.pseudonimo %> - 
+                                      <%= publicacion.fecha_hora.getFullYear()%>
+                                      <%= publicacion.fecha_hora.getMonth()+1 %>
+                                      <%= publicacion.fecha_hora.getDate()%>
+                                    </h6>
+                                    <p class="card-text">
+                                      <%= publicacion.resumen %>
+                                    </p>
+                                    <a href="#" class="btn btn-outline-success">
+                                    <span class="fa fa-heart fa-fw"></span>  
+                                    Votar
+                                    <%= publicacion.votos %>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+        </main>
+
         <%- include ('./partials/footer') %>
 
         <script src="javascripts/script.js"></script>

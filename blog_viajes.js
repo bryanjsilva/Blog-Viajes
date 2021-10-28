@@ -10,7 +10,7 @@ const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
     password: 'rukulo',
-    database: 'ejemplo_backend'
+    database: 'blog_viajes'
 })
 
 app.use(bodyParser.json())
@@ -22,7 +22,11 @@ app.use(express.static('public'))
 
 app.get('/', (req, res)=>{
     pool.getConnection((err,connection)=>{
-        res.render('index')
+        const query = 'SELECT titulo, resumen, fecha_hora, pseudonimo, votos FROM publicaciones INNER JOIN autores ON publicaciones.autor_id = autores.id ORDER BY fecha_hora DESC LIMIT 5'
+        connection.query(query, (error, filas, campos)=>{
+            res.render('index', {publicaciones: filas})
+        })
+        connection.release()
     })
 })
 
