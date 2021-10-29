@@ -31,8 +31,9 @@
                                     <h6>
                                       <span class="fa fa-user fa-fw"></span>
                                       <%= publicacion.pseudonimo %> - 
-                                      <%= publicacion.fecha_hora.getFullYear()%>
-                                      <%= publicacion.fecha_hora.getMonth()+1 %>
+                                      <span class="fa fa-calendar fa-fw"></span>
+                                      <%= publicacion.fecha_hora.getFullYear()%>/
+                                      <%= publicacion.fecha_hora.getMonth()+1 %>/
                                       <%= publicacion.fecha_hora.getDate()%>
                                     </h6>
                                     <p class="card-text">
