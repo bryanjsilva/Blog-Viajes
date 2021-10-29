@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Blog de Viajes | Registro</title> 
+        <link  rel="icon"   href="images/logo.png" type="image/png" />
+        <link rel="stylesheet" href="stylesheets/styles.css">
+    </head>
+    <body>
+        <%- include ('./partials/header') %>
+        
+        <main class="m-auto bg-dark text-light p-md-5">
+            <h1>Registro</h1>
+            <p>Ingresa tus datos para registrarte como un nuevo autor y compartir tus experiencias de viaje en el blog</p>
+
+            <form action="/procesar_registro" method="post">
+                <fieldset class="col-10 col-md-4 mx-auto border rounded mt-4 p-2">
+                    <h4 class="text-center">Nuevo autor</h4>
+                    <div class="input-group my-4">
+                        <span class="input-group-text"><i class="fa fa-envelope fa-fw"></i></span>
+                        <input type="email" class="form-control" placeholder="Correo electrónico" aria-label="email" id="email" name="email">
+                    </div>
+                    <div class="input-group my-4">
+                        <span class="input-group-text"><i class="fa fa-key fa-fw"></i></span>
+                        <input type="password" class="form-control" placeholder="Contraseña" aria-label="password" id="contrasena" name="contrasena">
+                    </div>
+                    <div class="input-group my-4">
+                        <span class="input-group-text"><i class="fa fa-user-secret fa-fw"></i></span>
+                        <input type="text" class="form-control" placeholder="Pseudónimo" aria-label="username" id="pseudonimo" name="pseudonimo">
+                    </div>
+                    <button class="btn btn-warning mb-2" type="submit">Continuar</button>
+                    <% if(mensaje && mensaje.length > 0) {%>
+                        <div class="alert alert-warning mt-3"><span class="fa fa-info-circle fa-fw"></span> <%=mensaje%></div>
+                    <% } %>
+                </fieldset>
+            </form>
+            
+
+        </main>
+
+        <%- include ('./partials/footer') %>
+
+        <script src="javascripts/script.js"></script>
+        <script src="javascripts/bootstrap.bundle.min.js"></script>
+    </body>
+</html>
