@@ -76,6 +76,44 @@ app.get('/login', (req, res)=>{
     res.render('login', {mensaje: req.flash('mensaje')})
 })
 
+app.use('/admin/', (req, res, then)=>{
+    if(!req.session.usuario){
+        req.flash('mensaje', 'Aún no ha iniciado sesión')
+        res.redirect('/login')
+    }else{
+        then()
+    }
+})
+
+app.post('/procesar_login', (req, res)=>{
+    pool.getConnection((err,connection)=>{
+        const email = req.body.email.toLowerCase().trim()
+        const password = req.body.contrasena
+
+        const query = `SELECT * FROM autores WHERE email = ${connection.escape(email)} AND contrasena = ${connection.escape(password)}`
+
+        connection.query(query, (error,filas,campos)=>{
+            if(filas.length > 0){
+                req.session.usuario = filas[0]
+                res.redirect('/admin/index')
+            }else{
+                req.flash('mensaje', 'El email o la contraseña son incorrectos')
+                res.redirect('/login')
+            }
+        })
+        connection.release()
+    })
+})
+
+app.get('/admin/index', (req,res)=>{
+    res.render('admin/index', {usuario: req.session.usuario.pseudonimo})
+})
+
+app.get('/logout', (req, res)=>{
+    req.session.destroy()
+    res.redirect('/')
+})
+
 app.listen(8080, ()=>{
     console.log("Servidor iniciado")
 })
