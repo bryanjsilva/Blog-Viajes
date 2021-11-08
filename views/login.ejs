@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Blog de Viajes | Registro</title> 
+        <title>Blog de Viajes | Iniciar Sesión</title> 
         <link  rel="icon"   href="images/logo.png" type="image/png" />
         <link rel="stylesheet" href="stylesheets/styles.css">
     </head>
@@ -12,27 +12,23 @@
         <%- include ('./partials/header') %>
         
         <main class="m-auto bg-dark text-light p-md-5">
-            <h1>Registro</h1>
-            <p>Ingresa tus datos para registrarte como un nuevo autor y compartir tus experiencias de viaje en el blog</p>
+            <h1>Iniciar sesión</h1>
+            <p>Ingresa al sistema para publicar todo sobre tus viajes</p>
 
-            <form action="/procesar_registro" method="post">
+            <form action="/procesar_login" method="post">
                 <fieldset class="col-10 col-md-4 mx-auto mt-4 p-2">
                     <h4 class="text-center">Nuevo autor</h4>
                     <div class="form-floating mb-3 text-dark">
-                        <input type="email" class="form-control" placeholder="Correo electrónico" aria-label="email" id="email" name="email">
+                        <input type="email" class="form-control" id="email" placeholder="name@example.com" name="email">
                         <label for="email"><i class="fa fa-envelope fa-fw"></i>  Correo electrónico</label>
                     </div>
                     <div class="form-floating mb-3 text-dark">
-                        <input type="password" class="form-control" placeholder="Contraseña" aria-label="password" id="contrasena" name="contrasena">
+                        <input type="password" class="form-control" id="contrasena" placeholder="Password" name="contrasena">
                         <label for="contrasena"><i class="fa fa-key fa-fw"></i>  Contraseña</label>
                     </div>
-                    <div class="form-floating mb-3 text-dark">
-                        <input type="text" class="form-control" placeholder="Pseudónimo" aria-label="username" id="pseudonimo" name="pseudonimo">
-                        <label for="pseudonimo"><i class="fa fa-user-secret fa-fw"></i>  Pseudónimo</label>
-                    </div>
                     <div class="d-flex flex-column">
-                        <button class="btn btn-warning mb-2" type="submit">Continuar</button>
-                        <a href="/login" class="btn btn-link">¿Ya tienes una cuenta? Ingresa aquí</a>
+                        <button class="btn btn-warning mb-2" type="submit">Ingresar</button>
+                        <a href="/registro" class="btn btn-link">¿Eres nuev@? Regístrate aquí</a>
                     </div>
                     <% if(mensaje && mensaje.length > 0) {%>
                         <div class="alert alert-warning mt-3"><span class="fa fa-info-circle fa-fw"></span> <%=mensaje%></div>
@@ -42,9 +38,7 @@
             
 
         </main>
-
         <%- include ('./partials/footer') %>
-
         <script src="javascripts/script.js"></script>
         <script src="javascripts/bootstrap.bundle.min.js"></script>
     </body>

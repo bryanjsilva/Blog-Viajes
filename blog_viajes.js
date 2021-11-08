@@ -72,6 +72,10 @@ app.post('/procesar_registro', (req, res)=>{
     })
 })
 
+app.get('/login', (req, res)=>{
+    res.render('login', {mensaje: req.flash('mensaje')})
+})
+
 app.listen(8080, ()=>{
     console.log("Servidor iniciado")
 })
