@@ -5,9 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Blog de Viajes | Editar</title> 
-        <link  rel="icon"   href="../images/logo.png" type="image/png" />
-        <link rel="stylesheet" href="../stylesheets/styles.css">
-        <script src="../javascripts/ckeditor5-build-classic/ckeditor.js"></script>
+        <link  rel="icon"   href="/images/logo.png" type="image/png" />
+        <link rel="stylesheet" href="/stylesheets/styles.css">
+        <script src="/javascripts/ckeditor5-build-classic/ckeditor.js"></script>
     </head>
     <%- include ('../partials/header_privado') %>
     <body>
@@ -20,13 +20,14 @@
 
             <div class="col-sm-6">
                 <form action="/admin/procesar_actualizar" method="post">
+                    <input type="hidden" name="id" value="<%=publicacion.id%>">
                     <fieldset>
                         <legend>
                             Datos de la publicación
                         </legend>
-                        <input class="mb-3">
+                        <div class="mb-3">
                             <label for="titulo" class="form-label">Título</label>
-                            <input type="text" id="titulo" required="true" class="form-control" name="titulo" value=<%=publicacion.titulo%>>
+                            <input type="text" id="titulo" required="true" class="form-control" name="titulo" value="<%=publicacion.titulo%>">
                         </div>
                         <div class="mb-3">
                             <label for="resumen" class="form-label">Resumen</label>
