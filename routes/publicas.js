@@ -12,9 +12,17 @@ const pool = mysql.createPool({
 
 router.get('/', (req, res)=>{
     pool.getConnection((err,connection)=>{
-        const query = 'SELECT titulo, resumen, fecha_hora, pseudonimo, votos FROM publicaciones INNER JOIN autores ON publicaciones.autor_id = autores.id ORDER BY fecha_hora DESC LIMIT 5'
+        let query
+        let searchQuery = ""
+        const search = (req.query.search) ? req.query.search : ""
+        if(search != ""){
+            searchQuery = `WHERE titulo LIKE '%${search}%' OR resumen LIKE '%${search}%' OR contenido LIKE '%${search}%'`
+        }
+        query = `
+        SELECT * FROM publicaciones INNER JOIN autores ON publicaciones.autor_id = autores.id ${searchQuery} ORDER BY fecha_hora DESC
+        `
         connection.query(query, (error, filas, campos)=>{
-            res.render('index', {publicaciones: filas})
+            res.render('index', {publicaciones: filas, busqueda: search})
         })
         connection.release()
     })
