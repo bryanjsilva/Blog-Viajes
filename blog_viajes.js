@@ -106,7 +106,37 @@ app.post('/procesar_login', (req, res)=>{
 })
 
 app.get('/admin/index', (req,res)=>{
-    res.render('admin/index', {usuario: req.session.usuario.pseudonimo})
+    pool.getConnection((err,connection)=>{
+        const query = `SELECT * FROM publicaciones WHERE autor_id = ${connection.escape(req.session.usuario.id)}`
+        connection.query(query,(error,filas,campos)=>{
+            res.render('admin/index', {usuario: req.session.usuario, mensaje: req.flash('mensaje'), publicaciones: filas})
+        })
+        connection.release()
+    })
+})
+
+app.get('/admin/agregar', (req,res)=>{
+    res.render('admin/agregar', {mensaje: req.flash('mensaje'), usuario: req.session.usuario})
+})
+
+app.post('/admin/procesar_agregar',(req,res)=>{
+    pool.getConnection((err,connection)=>{
+        const date = new Date()
+        const fecha = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
+        const query = `INSERT INTO publicaciones (titulo, resumen, contenido, fecha_hora, autor_id) VALUES (
+          ${connection.escape(req.body.titulo)},
+          ${connection.escape(req.body.resumen)},
+          ${connection.escape(req.body.contenido)},
+          ${connection.escape(fecha)},
+          ${connection.escape(req.session.usuario.id)}
+        )
+      `
+        connection.query(query, (error,filas,campos)=>{
+            req.flash('mensaje', 'Publicación agregada')
+            res.redirect('/admin/index')
+        })
+        connection.release()
+    })
 })
 
 app.get('/logout', (req, res)=>{

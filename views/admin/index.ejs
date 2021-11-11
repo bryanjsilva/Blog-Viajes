@@ -4,38 +4,57 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Blog de Viajes</title> 
+        <title>Blog de Viajes | <%=usuario.pseudonimo%></title> 
         <link  rel="icon"   href="../images/logo.png" type="image/png" />
         <link rel="stylesheet" href="../stylesheets/styles.css">
     </head>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light d-flex flex-lg-column">
-            <div class="container-fluid">
-                <a href="/" class="navbar-brand m-auto">
-                    <img src="../images/logo.png" alt="logo del blog" class="m-auto" width="100" height="100">
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse text-center text-dark" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item my-1">
-                            <a href="/admin/index" class="navbar-brand"><span class="container"><i class="fa fa-user fa-fw"></i></span><%=usuario%></a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/logout" class="btn btn-warning"> Cerrar sesión</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
+    <%- include ('../partials/header_privado') %>
     <body>
         <main class="m-auto bg-dark text-light p-md-5">
-            Ha ingresado con éxito
+            <h1>Mis publicaciones</h1>
+            <hr>
+            <div class="row">
+                <div class="col-sm-10 m-auto">
+                    <% if(mensaje && mensaje.length > 0){ %>
+                    <div class="alert alert-warning mt-3"><span class="fa fa-info-circle fa-fw"></span> <%=mensaje%></div>
+                    <% } %>
+
+                    <table class="table table-light table-hover table-responsive text-center">
+                        <thead class="table-warning">
+                            <tr>
+                                <th scope="col">Título</th>
+                                <th scope="col">Resumen</th>
+                                <th scope="col">Votos</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% publicaciones.forEach(publicacion => { %>
+                            <tr>
+                                <td>
+                                    <%=publicacion.titulo%>
+                                </td>
+                                <td>
+                                    <%=publicacion.resumen%>
+                                </td>
+                                <td>
+                                    <%=publicacion.votos%>
+                                </td>
+                                <td>
+                                    <a href="/admin/actualizar" class="btn btn-info"><i class="fa fa-pen fa-fw"></i></a>
+                                    <a href="/admin/procesar_eliminar" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i></a>
+                                </td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                    <hr>
+                    <a class="btn btn-warning" href="/admin/agregar">Agregar publicación <i class="fa fa-plus-circle fa-fw"></i> </a>
+                </div>
+            </div>
         </main>
 
-
+        <%- include ('../partials/footer_privado') %>
         <script src="javascripts/script.js"></script>
         <script src="javascripts/bootstrap.bundle.min.js"></script>
     </body>
