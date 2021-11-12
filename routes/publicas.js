@@ -14,15 +14,30 @@ router.get('/', (req, res)=>{
     pool.getConnection((err,connection)=>{
         let query
         let searchQuery = ""
+        let modificadorPagina = ""
+        let pagina = 0
         const search = (req.query.search) ? req.query.search : ""
         if(search != ""){
             searchQuery = `WHERE titulo LIKE '%${search}%' OR resumen LIKE '%${search}%' OR contenido LIKE '%${search}%'`
+            modificadorPagina = ""
+        }else{
+            pagina = req.query.pagina ? parseInt(req.query.pagina) : 0
+            if(pagina < 0){
+                pagina = 0
+            }
+            modificadorPagina = `
+            LIMIT 5 OFFSET ${pagina*5}`
         }
         query = `
-        SELECT * FROM publicaciones INNER JOIN autores ON publicaciones.autor_id = autores.id ${searchQuery} ORDER BY fecha_hora DESC
+        SELECT * FROM publicaciones INNER JOIN autores ON publicaciones.autor_id = autores.id ${searchQuery} ORDER BY fecha_hora DESC ${modificadorPagina}
         `
         connection.query(query, (error, filas, campos)=>{
-            res.render('index', {publicaciones: filas, busqueda: search})
+            let maxPaginas = 0
+            if(filas.length < 5 ){
+                maxPaginas = pagina
+            }
+            pagina = maxPaginas == filas.length ? maxPaginas-1 : pagina
+            res.render('index', {publicaciones: filas, busqueda: search, pagina: pagina})
         })
         connection.release()
     })
