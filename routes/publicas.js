@@ -114,7 +114,6 @@ router.get('/publicacion/:id',(req,res)=>{
         const query = `SELECT * FROM publicaciones WHERE publicacionid = ${connection.escape(req.params.id)}`
         connection.query(query, (error,filas,campos)=>{
             if(filas.length > 0){
-                console.log(filas)
                 res.render('publicacion', {publicacion: filas[0], mensaje: req.flash('mensaje')})
             }else{
                 req.flash('mensaje','La publicación no existe')
