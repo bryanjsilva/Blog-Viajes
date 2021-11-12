@@ -10,7 +10,13 @@
             <div class="collapse navbar-collapse text-center text-dark" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item my-1">
-                        <a href="/admin/index" class="navbar-brand"><span class="container"><i class="fa fa-user fa-fw"></i></span><%=usuario.pseudonimo%></a>
+                        <a href="/admin/index" class="navbar-brand"><span class="container">
+                            <% if(usuario.avatar && usuario.avatar != "") { %>
+                                <img src="/avatars/<%=usuario.avatar%>" alt="avatar del usuario" class="avatar">
+                            <% } else { %>
+                                <i class="fa fa-user fa-fw"></i>
+                            <% } %>
+                        </span><%=usuario.pseudonimo%></a>
                     </li>
                     <li class="nav-item">
                         <a href="/admin/logout" class="btn btn-warning"> Cerrar sesión</a>

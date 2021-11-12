@@ -39,7 +39,11 @@
                                       </a>
                                     </h4>
                                     <h6>
-                                      <span class="fa fa-user fa-fw"></span>
+                                        <% if(publicacion.avatar && publicacion.avatar != "") { %>
+                                            <img src="/avatars/<%=publicacion.avatar%>" alt="avatar del usuario" class="avatar">
+                                        <% } else { %>
+                                            <span class="fa fa-user fa-fw"></span>
+                                        <% } %>
                                       <%= publicacion.pseudonimo %> - 
                                       <span class="fa fa-calendar fa-fw"></span>
                                       <%= publicacion.fecha_hora.getFullYear()%>/

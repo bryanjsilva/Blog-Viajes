@@ -15,7 +15,7 @@
             <h1>Registro</h1>
             <p>Ingresa tus datos para registrarte como un nuevo autor y compartir tus experiencias de viaje en el blog</p>
 
-            <form action="/procesar_registro" method="post">
+            <form action="/procesar_registro" method="post" enctype="multipart/form-data">
                 <fieldset class="col-10 col-md-4 mx-auto mt-4 p-2">
                     <h4 class="text-center">Nuevo autor</h4>
                     <div class="form-floating mb-3 text-dark">
@@ -30,6 +30,10 @@
                         <input type="text" class="form-control" placeholder="Pseudónimo" aria-label="username" id="pseudonimo" name="pseudonimo">
                         <label for="pseudonimo"><i class="fa fa-user-secret fa-fw"></i>  Pseudónimo</label>
                     </div>
+                    <div class="mb-3">
+                        <label for="avatar" class="form-label">Elige un avatar</label>
+                        <input class="form-control" type="file" id="avatar" name="avatar">
+                      </div>
                     <div class="d-flex flex-column">
                         <button class="btn btn-warning mb-2" type="submit">Continuar</button>
                         <a href="/login" class="btn btn-link">¿Ya tienes una cuenta? Ingresa aquí</a>

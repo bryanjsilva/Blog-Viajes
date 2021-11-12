@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const mysql = require('mysql')
+const path = require('path')
 
 const pool = mysql.createPool({
     connectionLimit: 20,
@@ -74,8 +75,27 @@ router.post('/procesar_registro', (req, res)=>{
                             ${connection.escape(pseudonimo)})`
 
                         connection.query(query, (error,filas,campos)=>{
-                            req.flash('mensaje', 'Se ha registrado correctamente')
-                            res.redirect('/registro')
+                            if(req.files && req.files.avatar){
+                                const archivoAvatar = req.files.avatar
+                                const id = filas.insertId
+                                const nombreArchivo = `${id}${path.extname(archivoAvatar.name)}`
+                                archivoAvatar.mv(`./public/avatars/${nombreArchivo}`,(error)=>{
+                                    const consultaAvatar = `
+                                    UPDATE autores SET avatar = ${connection.escape(nombreArchivo)}
+                                    WHERE id = ${connection.escape(id)}
+                                    `
+                                connection.query(consultaAvatar, (error,filas,campos)=>{
+                                    req.flash('mensaje','Usuario registrado con avatar')
+                                    console.log('id: ', id)
+                                    console.log('query: ', consultaAvatar)
+                                    res.redirect('/registro')
+                                })
+                                })
+
+                            }else{
+                                req.flash('mensaje', 'Se ha registrado correctamente')
+                                res.redirect('/registro')
+                            }
                         })
                     }
                 })
