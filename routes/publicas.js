@@ -37,7 +37,7 @@ router.get('/', (req, res)=>{
                 maxPaginas = pagina
             }
             pagina = maxPaginas == filas.length ? maxPaginas-1 : pagina
-            res.render('index', {publicaciones: filas, busqueda: search, pagina: pagina})
+            res.render('index', {publicaciones: filas, busqueda: search, pagina: pagina, mensaje: req.flash('mensaje')})
         })
         connection.release()
     })
@@ -106,6 +106,21 @@ router.post('/procesar_login', (req, res)=>{
             }
         })
         connection.release()
+    })
+})
+
+router.get('/publicacion/:id',(req,res)=>{
+    pool.getConnection((err,connection)=>{
+        const query = `SELECT * FROM publicaciones WHERE publicacionid = ${connection.escape(req.params.id)}`
+        connection.query(query, (error,filas,campos)=>{
+            if(filas.length > 0){
+                console.log(filas)
+                res.render('publicacion', {publicacion: filas[0], mensaje: req.flash('mensaje')})
+            }else{
+                req.flash('mensaje','La publicación no existe')
+                res.redirect('/')
+            }
+        })
     })
 })
 

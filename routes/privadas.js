@@ -73,10 +73,11 @@ router.post('/admin/procesar_actualizar', (req, res) => {
         resumen = ${connection.escape(req.body.resumen)},
         contenido = ${connection.escape(req.body.contenido)}
         WHERE
-        id = ${connection.escape(req.body.id)}
+        publicacionid = ${connection.escape(req.body.id)}
         AND
         autor_id = ${connection.escape(req.session.usuario.id)}
       `
+      console.log(req.body.id)
       connection.query(query, (error, filas, campos) => {
         if (filas && filas.changedRows > 0){
             req.flash('mensaje', 'La publicación se modificó con éxito')
@@ -97,7 +98,7 @@ router.post('/admin/procesar_actualizar', (req, res) => {
         FROM
         publicaciones
         WHERE
-        id = ${connection.escape(req.params.id)}
+        publicacionid = ${connection.escape(req.params.id)}
         AND
         autor_id = ${connection.escape(req.session.usuario.id)}
       `
@@ -107,6 +108,7 @@ router.post('/admin/procesar_actualizar', (req, res) => {
         }
         else{
             req.flash('mensaje', 'La publicación no pudo eliminarse')
+            console.log(error)
         }
         res.redirect("/admin/index")
       })
