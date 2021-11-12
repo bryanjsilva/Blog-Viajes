@@ -51,7 +51,7 @@ router.post('/admin/procesar_agregar',(req,res)=>{
 
 router.get('/admin/actualizar/:id', (req,res)=>{
     pool.getConnection((err, connection)=>{
-        const query = `SELECT * FROM publicaciones WHERE id = ${connection.escape(req.params.id)} AND autor_id = ${connection.escape(req.session.usuario.id)}`
+        const query = `SELECT * FROM publicaciones WHERE publicacionid = ${connection.escape(req.params.id)} AND autor_id = ${connection.escape(req.session.usuario.id)}`
         connection.query(query,(error,filas,campos)=>{
             if(filas.length > 0){
                 res.render('admin/actualizar', {publicacion: filas[0],mensaje: req.flash('mensaje'), usuario: req.session.usuario})
