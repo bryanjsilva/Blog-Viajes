@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Blog de Viajes | Autores</title> 
+        <link  rel="icon"   href="images/logo.png" type="image/png" />
+        <link rel="stylesheet" href="stylesheets/styles.css">
+    </head>
+    <body>
+        <%- include ('./partials/header') %>
+        <main class="m-auto bg-dark text-light p-md-5">
+            <div class="container-fluid">
+                <img src="images/fondo.jpg" class="w-100" alt="foto de paisaje">
+                <h1 class="m-2">Blog de Viajes | Autores</h1>
+                <p class="m-2">Conoce a nuestros autores:</p>
+                
+                <% autores.forEach(autor => { %>
+                    <div class="col-sm-10 text-dark d-flex my-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="card-title"><%=autor.pseudonimo%></h3>
+                                <div class="d-flex">
+                                    <h5 class="card-subtitle"><%=autor.email%> &nbsp;</h5>
+                                    <span>
+                                        <% if(autor.avatar && autor.avatar != ""){ %>
+                                            <img src="avatars/<%=autor.avatar%>" alt="avatar" class="avatar">
+                                        <% } else { %>
+                                            <i class="fa fa-user fa-fw"></i>
+                                        <% } %>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+
+            </div>
+        </main>
+
+        <%- include ('./partials/footer') %>
+
+        <script src="javascripts/script.js"></script>
+        <script src="javascripts/bootstrap.bundle.min.js"></script>
+    </body>
+</html>
