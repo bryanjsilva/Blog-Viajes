@@ -18,6 +18,13 @@
                 <div class="row d-flex justify-content-center">
                     <div class="col-sm-10">
                         <h1><%=publicacion.titulo%></h1>
+                        <a type="button" href="/publicacion/<%=publicacion.publicacionid%>/votar" class="btn btn-success position-relative mb-3">
+                            Votar +1
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
+                              <%=publicacion.votos%>
+                              <span class="visually-hidden">unread messages</span>
+                            </span>
+                          </a>
                         <%-publicacion.contenido%>
                     </div>
                 </div>
