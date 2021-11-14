@@ -16,13 +16,13 @@
                 <h1 class="m-2">Blog de Viajes | Autores</h1>
                 <p class="m-2">Conoce a nuestros autores:</p>
                 
-                <% autores.forEach(autor => { %>
-                    <div class="col-sm-10 text-dark d-flex my-3">
-                        <div class="card">
+                <div class="container-fluid text-dark d-flex align-content-around"></div>
+                    <% autores.forEach(autor => { %>                   
+                        <div class="card text-dark d-inline-flex m-1">
                             <div class="card-body">
                                 <h3 class="card-title"><%=autor.pseudonimo%></h3>
-                                <div class="d-flex">
-                                    <h5 class="card-subtitle"><%=autor.email%> &nbsp;</h5>
+                                <div class="align-items-center">
+                                    <h6 class="card-subtitle"><%=autor.email%> &nbsp;</h6>
                                     <span>
                                         <% if(autor.avatar && autor.avatar != ""){ %>
                                             <img src="avatars/<%=autor.avatar%>" alt="avatar" class="avatar">
@@ -31,11 +31,15 @@
                                         <% } %>
                                     </span>
                                 </div>
+                                <ul class="list-group list-group-flush">
+                                    <% for(let publicacion of autor.publicaciones){ %>
+                                        <a href="/publicacion/<%=publicacion.id%>" class="list-group-item"><%=publicacion.titulo%></a>
+                                    <% } %>
+                                </ul>
                             </div>
                         </div>
-                    </div>
-                <% }) %>
-
+                    <% }) %>
+                </div>
             </div>
         </main>
 
