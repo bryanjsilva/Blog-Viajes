@@ -2,6 +2,37 @@ const express = require('express')
 const router = express.Router()
 const mysql = require('mysql')
 const path = require('path')
+const nodemailer = require('nodemailer')
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    secure: false,
+    requireTLS: true,
+    auth: {
+        user: 'cuenta.prueba.bjsp@gmail.com',
+        pass: 'Cuenta!prueb@1'
+    },
+    tls:{
+        rejectUnauthorized: false
+    }
+})
+
+enviarCorreoBienvenida = (email,nombre)=>{
+    const opciones = {
+        from: 'cuenta.prueba.bjsp@gmail.com',
+        to: email,
+        subject: 'Bienvenido al blog de viajes',
+        text: `Hola ${nombre}, te has registrado en el blog de viajes, ahora puedes realizar publicaciones.`
+    }
+    transporter.sendMail(opciones,(error,info)=>{
+        if(error){
+            console.log(error.message,info)
+        }else{
+            console.log('success')
+        }
+
+    })
+}
 
 const pool = mysql.createPool({
     connectionLimit: 20,
@@ -85,14 +116,14 @@ router.post('/procesar_registro', (req, res)=>{
                                     WHERE id = ${connection.escape(id)}
                                     `
                                 connection.query(consultaAvatar, (error,filas,campos)=>{
+                                    enviarCorreoBienvenida(email, pseudonimo)
                                     req.flash('mensaje','Usuario registrado con avatar')
-                                    console.log('id: ', id)
-                                    console.log('query: ', consultaAvatar)
                                     res.redirect('/registro')
                                 })
                                 })
 
                             }else{
+                                enviarCorreoBienvenida(email, pseudonimo)
                                 req.flash('mensaje', 'Se ha registrado correctamente')
                                 res.redirect('/registro')
                             }
